@@ -29,7 +29,7 @@ SHELL = /bin/sh
 .SUFFIXES: .cu .o
 
 # Compilers and linker:
-CC = nvcc
+CC = /usr/local/cuda/bin/nvcc
 
 # Program's name:
 PROG = MC-GPU_v1.3.x
