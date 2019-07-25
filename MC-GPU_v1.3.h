@@ -308,37 +308,37 @@ void init_CUDA_device( int* gpu_id, int myID, int numprocs,
 #ifdef USING_CUDA
 __constant__
 #endif
-short int dose_ROI_x_min_CONST, dose_ROI_x_max_CONST, dose_ROI_y_min_CONST, dose_ROI_y_max_CONST, dose_ROI_z_min_CONST, dose_ROI_z_max_CONST;
+extern short int dose_ROI_x_min_CONST, dose_ROI_x_max_CONST, dose_ROI_y_min_CONST, dose_ROI_y_max_CONST, dose_ROI_z_min_CONST, dose_ROI_z_max_CONST;
 
 //! Global variable to be stored in the GPU constant memory defining the size of the voxel phantom.
 #ifdef USING_CUDA
 __constant__
 #endif
-struct voxel_struct    voxel_data_CONST;      // Define the geometric constants
+extern struct voxel_struct    voxel_data_CONST;      // Define the geometric constants
 
 //! Global variable to be stored in the GPU constant memory defining the x-ray source.
 #ifdef USING_CUDA
 __constant__
 #endif
-struct source_struct   source_data_CONST;     // Define a particles source.
+extern struct source_struct   source_data_CONST;     // Define a particles source.
 
 //! Global variable to be stored in the GPU constant memory defining the x-ray detector.
 #ifdef USING_CUDA
 __constant__
 #endif
-struct detector_struct detector_data_CONST;   // Define a detector layer perpendicular to the y axis
+extern struct detector_struct detector_data_CONST;   // Define a detector layer perpendicular to the y axis
 
 //! Global variable to be stored in the GPU constant memory defining the linear interpolation data.
 #ifdef USING_CUDA
 __constant__
 #endif
-struct linear_interp   mfp_table_data_CONST;  // Define size of interpolation arrays
+extern struct linear_interp   mfp_table_data_CONST;  // Define size of interpolation arrays
 
 //! Global variable to be stored in the GPU constant memory defining the source energy spectrum.
 #ifdef USING_CUDA
 __constant__
 #endif
-struct source_energy_struct source_energy_data_CONST;
+extern struct source_energy_struct source_energy_data_CONST;
 
 
 //// *** GLOBAL FUNCTIONS *** ////
