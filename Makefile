@@ -30,9 +30,11 @@ SHELL = /bin/sh
 
 # Compilers and linker:
 CC = /usr/local/cuda/bin/nvcc
+#CC = gcc
 
 # Program's name:
 PROG = MC-GPU_v1.3.x
+#PROG = MC-GPU_v1.3_CPU.x
 
 # Include and library paths:
 CUDA_PATH = /usr/local/cuda/include/
@@ -43,10 +45,12 @@ OPENMPI_PATH = /usr/include/openmpi
 
 
 # Compiler's flags:
-CFLAGS = -O3 -use_fast_math -m64 -DUSING_CUDA -DUSING_MPI -I./ -I$(CUDA_PATH) -I$(CUDA_SDK_PATH) -L$(CUDA_SDK_LIB_PATH) -L$(CUDA_LIB_PATH) -lcudart -lm -lz -I$(OPENMPI_PATH) -lmpi --ptxas-options=-v 
+CFLAGS = -O3 -use_fast_math -m64 -DUSING_CUDA -DUSING_MPI
+#CFLAGS = -x c -O3
+LFLAGS = -I./ -I$(CUDA_PATH) -I$(CUDA_SDK_PATH) -L$(CUDA_SDK_LIB_PATH) -L$(CUDA_LIB_PATH) -lcudart -lm -lz -I$(OPENMPI_PATH) -lmpi --ptxas-options=-v
+#LFLAGS = -I./ -lm -lz
 #  NOTE: you can compile the code for a specific GPU compute capability. For example, for compute capabilities 5.0 and 6.1, use flags:
 #    -gencode=arch=compute_50,code=sm_50 -gencode=arch=compute_61,code=sm_61
-
 
 # Command to erase files:
 RM = /bin/rm -vf
@@ -57,7 +61,7 @@ SRCS = MC-GPU_v1.3.cu
 # Building the application:
 default: $(PROG)
 $(PROG):
-	$(CC) $(CFLAGS) $(SRCS) -o $(PROG)
+	$(CC) $(CFLAGS) $(SRCS) -o $(PROG) $(LFLAGS)
 
 # Rule for cleaning re-compilable files
 clean:
