@@ -754,7 +754,8 @@ int main(int argc, char **argv)
         total_histories_speed_test = histories_speed_test;
       #endif
             
-      cudaThreadSynchronize();    // Force the runtime to wait until GPU kernel has completed
+      //cudaThreadSynchronize();    // Force the runtime to wait until GPU kernel has completed
+      cudaDeviceSynchronize();
       getLastCudaError("\n\n !!Kernel execution failed while simulating particle tracks!! ");   // Check if the CUDA function returned any error
 
       float speed_test_time = float(clock()-clock_kernel)/CLOCKS_PER_SEC;
@@ -891,7 +892,8 @@ int main(int argc, char **argv)
       }
     #endif
     
-    cudaThreadSynchronize();    // Force the runtime to wait until the GPU kernel is completed
+    //cudaThreadSynchronize();    // Force the runtime to wait until the GPU kernel is completed
+    cudaDeviceSynchronize();
     getLastCudaError("\n\n !!Kernel execution failed while simulating particle tracks!! ");  // Check if kernel execution generated any error
 
     float real_GPU_speed = total_histories_current_kernel_float/(float(clock()-clock_kernel)/CLOCKS_PER_SEC);  // GPU speed for all the image simulation, not just the speed test.
@@ -1052,7 +1054,8 @@ int main(int argc, char **argv)
       #ifdef USING_CUDA
         MASTER_THREAD printf("       ==> CUDA: Launching kernel to reset the device image to 0: number of blocks = %d, threads per block = 128\n", (int)(ceil(pixels_per_image/128.0f)+0.01f) );
         init_image_array_GPU<<<(int)(ceil(pixels_per_image/128.0f)+0.01f),128>>>(image_device, pixels_per_image);
-        cudaThreadSynchronize();
+        //cudaThreadSynchronize();
+        cudaDeviceSynchronize();
         getLastCudaError("\n\n !!Kernel execution failed initializing the image array!! ");  // Check if kernel execution generated any error:
       #else        
         memset(image, 0, image_bytes);     //   Init memory space to 0.  (see http://www.lainoox.com/c-memset-examples/)
@@ -1089,7 +1092,8 @@ int main(int argc, char **argv)
   cudaFree(mfp_table_a_device);
   cudaFree(mfp_table_b_device);
   cudaFree(voxels_Edep_device);
-  checkCudaErrors( cudaThreadExit() );
+  //checkCudaErrors( cudaThreadExit() );
+  checkCudaErrors( cudaDeviceReset());
 
   MASTER_THREAD printf("       ==> CUDA: Time freeing the device memory and ending the GPU threads: %.6f s\n", float(clock()-clock_kernel)/CLOCKS_PER_SEC);
 
@@ -2629,7 +2633,8 @@ void init_CUDA_device( int* gpu_id, int myID, int numprocs,
   MASTER_THREAD printf("       ==> CUDA: Launching kernel to initialize the device image to 0: number of blocks = %d, threads per block = 128\n", (int)(ceil(pixels_per_image/128.0f)+0.01f) );
 
   init_image_array_GPU<<<(int)(ceil(pixels_per_image/128.0f)+0.01f),128>>>(*image_device, pixels_per_image);
-    cudaThreadSynchronize();      // Force the runtime to wait until all device tasks have completed
+    //cudaThreadSynchronize();      // Force the runtime to wait until all device tasks have completed
+    cudaDeviceSynchronize();
     getLastCudaError("\n\n !!Kernel execution failed initializing the image array!! ");  // Check if kernel execution generated any error:
 
 

@@ -62,6 +62,7 @@
 #define  MAX_MATERIALS      15
 #define  MAX_SHELLS         30
 #define  NP_RAYLEIGH       128
+//#define  NP_RAYLEIGH       150
 #define  MAX_ENERGYBINS_RAYLEIGH  25005
 
 //! Maximum number of energy bins in the input x-ray energy spectrum.
@@ -308,37 +309,37 @@ void init_CUDA_device( int* gpu_id, int myID, int numprocs,
 #ifdef USING_CUDA
 __constant__
 #endif
-extern short int dose_ROI_x_min_CONST, dose_ROI_x_max_CONST, dose_ROI_y_min_CONST, dose_ROI_y_max_CONST, dose_ROI_z_min_CONST, dose_ROI_z_max_CONST;
+short int dose_ROI_x_min_CONST, dose_ROI_x_max_CONST, dose_ROI_y_min_CONST, dose_ROI_y_max_CONST, dose_ROI_z_min_CONST, dose_ROI_z_max_CONST;
 
 //! Global variable to be stored in the GPU constant memory defining the size of the voxel phantom.
 #ifdef USING_CUDA
 __constant__
 #endif
-extern struct voxel_struct    voxel_data_CONST;      // Define the geometric constants
+struct voxel_struct    voxel_data_CONST;      // Define the geometric constants
 
 //! Global variable to be stored in the GPU constant memory defining the x-ray source.
 #ifdef USING_CUDA
 __constant__
 #endif
-extern struct source_struct   source_data_CONST;     // Define a particles source.
+struct source_struct   source_data_CONST;     // Define a particles source.
 
 //! Global variable to be stored in the GPU constant memory defining the x-ray detector.
 #ifdef USING_CUDA
 __constant__
 #endif
-extern struct detector_struct detector_data_CONST;   // Define a detector layer perpendicular to the y axis
+struct detector_struct detector_data_CONST;   // Define a detector layer perpendicular to the y axis
 
 //! Global variable to be stored in the GPU constant memory defining the linear interpolation data.
 #ifdef USING_CUDA
 __constant__
 #endif
-extern struct linear_interp   mfp_table_data_CONST;  // Define size of interpolation arrays
+struct linear_interp   mfp_table_data_CONST;  // Define size of interpolation arrays
 
 //! Global variable to be stored in the GPU constant memory defining the source energy spectrum.
 #ifdef USING_CUDA
 __constant__
 #endif
-extern struct source_energy_struct source_energy_data_CONST;
+struct source_energy_struct source_energy_data_CONST;
 
 
 //// *** GLOBAL FUNCTIONS *** ////
